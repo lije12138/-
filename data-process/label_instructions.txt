@@ -1,0 +1,22 @@
+标签名称 (Label Name) 中文释义 (Category) 标签类型 (Label Type) 索引 (Index) 详细中医解释 (Detailed Explanation)
+jiankangshe 健康舌 全局标签 (Global Label) 0 呈淡红色，质地湿润，大小适中，舌苔薄白。无粘腻感或形态异常。代表健康个体气血平衡的状态。
+botaishe 剥苔舌 局部标签 (Local Label) 1 舌苔部分或全部脱落（“地图舌”），通常为白腻苔。是脾胃虚弱（气虚）和阴液耗损的典型体征。
+hongshe 红舌 全局标签 (Global Label) 2 舌色鲜红表明热证的进展（火邪或气分热盛）。色调的深浅与病理性热邪的严重程度相关（如绛舌提示热极）。
+zishe 紫舌 全局标签 (Global Label) 3 反映寒证、热证或血瘀。现代病理生理学认为其与微循环障碍、缺氧或代谢紊乱有关。
+pangdashe 胖大舌 全局标签 (Global Label) 4 舌体增大，可能伸出齿外。标志着因脾肾阳虚导致的寒湿内停（水湿内蓄）。
+shoushe 瘦舌 全局标签 (Global Label) 5 舌体萎缩，体积减小。表明血虚或阴虚证候（如脾虚、精气亏损）。
+hongdianshe 红点舌 局部标签 (Local Label) 6 菌状乳头充血，表现为点状病变。与热毒积聚或血瘀有关。
+liewenshe 裂纹舌 局部标签 (Local Label) 7 舌面出现不同形态的裂沟。标志着精血亏耗或慢性阴虚。
+chihenshe 齿痕舌 局部标签 (Local Label) 8 舌缘因牙齿压迫而呈扇贝状。是脾气虚或脾阳虚伴有湿气停滞的典型体征。
+baitaishe 白苔舌 全局标签 (Global Label) 9 生理性为薄白苔。病理性厚白苔提示寒湿阻滞或食积。
+huangtaishe 黄苔舌 全局标签 (Global Label) 10 由白苔转变而来，表明热证的进展（如胃热、炎症过程）。
+heitaishe 黑苔舌 全局标签 (Global Label) 11 极热或极寒的危重体征。需要紧急干预（如热衰竭或阳气衰败）。
+huataishe 滑苔舌 局部标签 (Local Label) 12 舌面水分过多，有欲涎之势。表明阳虚不能化湿（常见于脾肾阳虚）。
+shenquao 肾区凹陷舌 局部标签 (Local Label) 13 舌根部凹陷。反映肾气虚，伴有腰痛、乏力。在整合医学中可能与肾上腺疲劳相关。
+shenqutu 肾区凸起舌 局部标签 (Local Label) 14 隆起性病变提示肾经热毒积聚。鉴别诊断包括慢性肾病或代谢性疾病。 gandanao 肝胆区凹陷舌 局部标签 (Local Label) 15 舌两侧边缘凹陷。标志着肝血不足或气机郁滞（如慢性压力或睡眠剥夺的影响）。
+gandanao 肝胆区凹陷舌 局部标签 (Local Label) 15
+gandantu 肝胆区凸起舌 局部标签 (Local Label) 16 结节状隆起提示肝气郁结或胆道系统疾病（如胆结石、脂肪肝）。 piweiao 脾胃区凹陷舌 局部标签 (Local Label) 17 舌中部凹陷。是脾胃气虚或阴虚伴有吸收不良的典型体征。
+piweiao 脾胃区凹陷舌 局部标签 (Local Label) 17
+piweitu 脾胃区凸起舌 局部标签 (Local Label) 18
+xinfeiao 心肺区凹陷舌 局部标签 (Local Label) 19 舌尖部凹陷提示心肺气虚或慢性缺氧（如睡眠呼吸暂停的影响）。
+xinfeitu 心肺区凸起舌 局部标签 (Local Label) 20 舌尖隆起反映肺阴虚或心火上炎。与慢性呼吸或循环系统压力有关。
