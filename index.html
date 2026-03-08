@@ -1,0 +1,1519 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>舌象慧珍 - 中医智能舌诊平台</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
+        }
+        
+        :root {
+            --primary: #2a6e3f;
+            --primary-light: #e8f5e9;
+            --secondary: #d32f2f;
+            --accent: #ff9800;
+            --dark: #1a472a;
+            --light: #f8f9fa;
+            --gray: #6c757d;
+            --border-radius: 12px;
+            --box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            --transition: all 0.3s ease;
+        }
+        
+        body {
+            color: #333;
+            background-color: #f9f9f9;
+            line-height: 1.6;
+        }
+        
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+        
+        ul {
+            list-style: none;
+        }
+        
+        button {
+            cursor: pointer;
+            border: none;
+            outline: none;
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* 导航栏样式 */
+        header {
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+        
+        .logo i {
+            color: var(--secondary);
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+        
+        .nav-links a {
+            font-weight: 500;
+            padding: 8px 0;
+            position: relative;
+        }
+        
+        .nav-links a:hover, .nav-links a.active {
+            color: var(--primary);
+        }
+        
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--primary);
+            transition: var(--transition);
+        }
+        
+        .nav-links a:hover::after, .nav-links a.active::after {
+            width: 100%;
+        }
+        
+        .user-actions {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .user-actions .btn-login, .user-actions .btn-register {
+            padding: 8px 20px;
+            border-radius: 50px;
+            font-weight: 500;
+        }
+        
+        .btn-login {
+            background-color: transparent;
+            color: var(--primary);
+            border: 1px solid var(--primary);
+        }
+        
+        .btn-register {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        .btn-login:hover, .btn-register:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--box-shadow);
+        }
+        
+        .mobile-menu-btn {
+            display: none;
+            font-size: 1.5rem;
+            background: none;
+            color: var(--primary);
+        }
+        
+        /* 首页英雄区域 */
+        .hero {
+            background: linear-gradient(135deg, var(--primary-light) 0%, #ffffff 100%);
+            padding: 80px 0;
+            overflow: hidden;
+        }
+        
+        .hero-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 40px;
+        }
+        
+        .hero-text {
+            flex: 1;
+        }
+        
+        .hero-text h1 {
+            font-size: 3rem;
+            color: var(--dark);
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+        
+        .hero-text p {
+            font-size: 1.2rem;
+            color: var(--gray);
+            margin-bottom: 30px;
+            max-width: 600px;
+        }
+        
+        .hero-buttons {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .btn-primary, .btn-secondary {
+            padding: 14px 32px;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .btn-primary {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        .btn-secondary {
+            background-color: white;
+            color: var(--primary);
+            border: 1px solid var(--primary);
+        }
+        
+        .btn-primary:hover, .btn-secondary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .hero-image {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+        }
+        
+        .hero-image img {
+            max-width: 100%;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+        }
+        
+        .stats {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 60px;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        
+        .stat-item {
+            text-align: center;
+            flex: 1;
+            min-width: 150px;
+        }
+        
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 5px;
+        }
+        
+        .stat-label {
+            color: var(--gray);
+            font-size: 1rem;
+        }
+        
+        /* 工作原理部分 */
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        
+        .section-title h2 {
+            font-size: 2.5rem;
+            color: var(--dark);
+            margin-bottom: 15px;
+        }
+        
+        .section-title p {
+            color: var(--gray);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        .section-padding {
+            padding: 80px 0;
+        }
+        
+        .workflow {
+            display: flex;
+            justify-content: space-between;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+        
+        .workflow-step {
+            flex: 1;
+            min-width: 220px;
+            text-align: center;
+            padding: 30px 20px;
+            border-radius: var(--border-radius);
+            background-color: white;
+            box-shadow: var(--box-shadow);
+            transition: var(--transition);
+        }
+        
+        .workflow-step:hover {
+            transform: translateY(-10px);
+        }
+        
+        .step-number {
+            display: inline-block;
+            width: 50px;
+            height: 50px;
+            line-height: 50px;
+            background-color: var(--primary-light);
+            color: var(--primary);
+            font-weight: 700;
+            font-size: 1.5rem;
+            border-radius: 50%;
+            margin-bottom: 20px;
+        }
+        
+        .workflow-step h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: var(--dark);
+        }
+        
+        .workflow-step p {
+            color: var(--gray);
+        }
+        
+        /* 上传区域 */
+        .upload-section {
+            background-color: var(--primary-light);
+        }
+        
+        .upload-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: white;
+            border-radius: var(--border-radius);
+            padding: 50px;
+            box-shadow: var(--box-shadow);
+            text-align: center;
+        }
+        
+        .upload-title {
+            font-size: 2rem;
+            color: var(--dark);
+            margin-bottom: 20px;
+        }
+        
+        .upload-subtitle {
+            color: var(--gray);
+            margin-bottom: 30px;
+        }
+        
+        .upload-area {
+            border: 2px dashed var(--primary);
+            border-radius: var(--border-radius);
+            padding: 60px 20px;
+            margin-bottom: 30px;
+            background-color: var(--primary-light);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .upload-area:hover {
+            background-color: rgba(42, 110, 63, 0.1);
+        }
+        
+        .upload-area i {
+            font-size: 4rem;
+            color: var(--primary);
+            margin-bottom: 20px;
+        }
+        
+        .upload-area h3 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            color: var(--dark);
+        }
+        
+        .upload-area p {
+            color: var(--gray);
+            margin-bottom: 10px;
+        }
+        
+        .upload-tips {
+            text-align: left;
+            margin-top: 30px;
+        }
+        
+        .upload-tips h4 {
+            color: var(--dark);
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+        }
+        
+        .upload-tips ul {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 10px;
+        }
+        
+        .upload-tips li {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+            color: var(--gray);
+        }
+        
+        .upload-tips li i {
+            color: var(--primary);
+        }
+        
+        .btn-next {
+            margin-top: 30px;
+            background-color: var(--primary);
+            color: white;
+            padding: 15px 40px;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        /* 功能特色部分 */
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 30px;
+        }
+        
+        .feature-card {
+            background-color: white;
+            border-radius: var(--border-radius);
+            padding: 30px;
+            box-shadow: var(--box-shadow);
+            transition: var(--transition);
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-10px);
+        }
+        
+        .feature-icon {
+            width: 70px;
+            height: 70px;
+            background-color: var(--primary-light);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+        
+        .feature-icon i {
+            font-size: 2rem;
+            color: var(--primary);
+        }
+        
+        .feature-card h3 {
+            font-size: 1.5rem;
+            color: var(--dark);
+            margin-bottom: 15px;
+        }
+        
+        .feature-card p {
+            color: var(--gray);
+        }
+        
+        .btn-experience {
+            margin: 50px auto 0;
+            display: block;
+            width: fit-content;
+            background-color: var(--primary);
+            color: white;
+            padding: 15px 40px;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+        
+        /* 关于我们部分 */
+        .about-section {
+            background-color: white;
+        }
+        
+        .about-content {
+            display: flex;
+            align-items: center;
+            gap: 50px;
+            flex-wrap: wrap;
+        }
+        
+        .about-text {
+            flex: 1;
+            min-width: 300px;
+        }
+        
+        .about-text h2 {
+            font-size: 2.5rem;
+            color: var(--dark);
+            margin-bottom: 20px;
+        }
+        
+        .about-text p {
+            color: var(--gray);
+            margin-bottom: 30px;
+        }
+        
+        .quote {
+            font-style: italic;
+            padding: 20px;
+            background-color: var(--primary-light);
+            border-radius: var(--border-radius);
+            border-left: 4px solid var(--primary);
+            margin: 30px 0;
+            color: var(--dark);
+        }
+        
+        .about-stats {
+            display: flex;
+            gap: 30px;
+            margin-top: 40px;
+            flex-wrap: wrap;
+        }
+        
+        .about-stat {
+            text-align: center;
+            flex: 1;
+            min-width: 120px;
+        }
+        
+        .about-stat-number {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 5px;
+        }
+        
+        .about-stat-label {
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+        
+        .about-image {
+            flex: 1;
+            min-width: 300px;
+            text-align: center;
+        }
+        
+        .about-image img {
+            max-width: 100%;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+        }
+        
+        /* 页脚部分 */
+        footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 60px 0 30px;
+        }
+        
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+        
+        .footer-logo {
+            flex: 1;
+            min-width: 250px;
+        }
+        
+        .footer-logo .logo {
+            margin-bottom: 20px;
+            color: white;
+        }
+        
+        .footer-logo p {
+            color: rgba(255, 255, 255, 0.7);
+            max-width: 300px;
+            margin-bottom: 20px;
+        }
+        
+        .footer-links {
+            flex: 2;
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 30px;
+        }
+        
+        .footer-column h4 {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            color: white;
+        }
+        
+        .footer-column ul li {
+            margin-bottom: 12px;
+        }
+        
+        .footer-column ul li a {
+            color: rgba(255, 255, 255, 0.7);
+            transition: var(--transition);
+        }
+        
+        .footer-column ul li a:hover {
+            color: white;
+            padding-left: 5px;
+        }
+        
+        .footer-bottom {
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 30px;
+            text-align: center;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.9rem;
+        }
+        
+        .footer-bottom-links {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 10px;
+            flex-wrap: wrap;
+        }
+        
+        .footer-bottom-links a {
+            color: rgba(255, 255, 255, 0.7);
+        }
+        
+        .footer-bottom-links a:hover {
+            color: white;
+        }
+        
+        .disclaimer {
+            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.5);
+            margin-top: 20px;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.5;
+        }
+        
+        /* 登录页面 */
+        .login-section {
+            min-height: calc(100vh - 80px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 60px 0;
+        }
+        
+        .login-container {
+            background-color: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            padding: 50px;
+            width: 100%;
+            max-width: 500px;
+            text-align: center;
+        }
+        
+        .login-container h2 {
+            color: var(--dark);
+            margin-bottom: 10px;
+            font-size: 2rem;
+        }
+        
+        .login-container p {
+            color: var(--gray);
+            margin-bottom: 30px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--dark);
+            font-weight: 500;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+        
+        .form-control:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(42, 110, 63, 0.1);
+        }
+        
+        .form-options {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+        
+        .remember-me {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .forgot-password {
+            color: var(--primary);
+        }
+        
+        .btn-login-submit {
+            width: 100%;
+            padding: 15px;
+            background-color: var(--primary);
+            color: white;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+        }
+        
+        .btn-login-submit:hover {
+            background-color: var(--dark);
+        }
+        
+        .back-home {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--primary);
+            margin-top: 20px;
+        }
+        
+        /* 个人中心页面 */
+        .profile-section {
+            padding: 60px 0;
+        }
+        
+        .profile-header {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+        
+        .profile-avatar {
+            width: 80px;
+            height: 80px;
+            background-color: var(--primary-light);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: var(--primary);
+            font-weight: 700;
+        }
+        
+        .profile-info h2 {
+            color: var(--dark);
+            margin-bottom: 5px;
+        }
+        
+        .profile-info p {
+            color: var(--gray);
+        }
+        
+        .profile-stats {
+            display: flex;
+            gap: 30px;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+        }
+        
+        .profile-stat-card {
+            flex: 1;
+            min-width: 150px;
+            background-color: white;
+            border-radius: var(--border-radius);
+            padding: 25px;
+            text-align: center;
+            box-shadow: var(--box-shadow);
+        }
+        
+        .profile-stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+        
+        .profile-stat-label {
+            color: var(--gray);
+            font-size: 1rem;
+        }
+        
+        .profile-tabs {
+            display: flex;
+            gap: 10px;
+            border-bottom: 1px solid #eee;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+        
+        .profile-tab {
+            padding: 15px 25px;
+            background-color: transparent;
+            color: var(--gray);
+            border-radius: var(--border-radius) var(--border-radius) 0 0;
+            font-weight: 500;
+        }
+        
+        .profile-tab.active {
+            background-color: white;
+            color: var(--primary);
+            border: 1px solid #eee;
+            border-bottom: 2px solid white;
+            position: relative;
+            bottom: -1px;
+        }
+        
+        .diagnosis-records {
+            background-color: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            overflow: hidden;
+        }
+        
+        .diagnosis-record {
+            padding: 25px;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        
+        .diagnosis-record:last-child {
+            border-bottom: none;
+        }
+        
+        .diagnosis-date {
+            font-weight: 600;
+            color: var(--dark);
+            min-width: 120px;
+        }
+        
+        .diagnosis-type {
+            padding: 8px 15px;
+            background-color: var(--primary-light);
+            color: var(--primary);
+            border-radius: 50px;
+            font-weight: 500;
+            font-size: 0.9rem;
+        }
+        
+        .diagnosis-description {
+            color: var(--gray);
+            flex: 1;
+            min-width: 200px;
+        }
+        
+        .btn-view-details {
+            padding: 8px 20px;
+            background-color: transparent;
+            color: var(--primary);
+            border: 1px solid var(--primary);
+            border-radius: 50px;
+            font-weight: 500;
+        }
+        
+        .btn-view-details:hover {
+            background-color: var(--primary-light);
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 992px) {
+            .hero-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .hero-text h1 {
+                font-size: 2.5rem;
+            }
+            
+            .section-title h2 {
+                font-size: 2rem;
+            }
+            
+            .workflow {
+                justify-content: center;
+            }
+            
+            .upload-tips ul {
+                grid-template-columns: 1fr;
+            }
+            
+            .about-content {
+                flex-direction: column;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .nav-links, .user-actions {
+                display: none;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            .hero-text h1 {
+                font-size: 2rem;
+            }
+            
+            .upload-container {
+                padding: 30px 20px;
+            }
+            
+            .login-container {
+                padding: 30px 20px;
+            }
+            
+            .footer-links {
+                flex-direction: column;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .hero-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .btn-primary, .btn-secondary {
+                width: 100%;
+                justify-content: center;
+            }
+            
+            .workflow-step {
+                min-width: 100%;
+            }
+            
+            .features {
+                grid-template-columns: 1fr;
+            }
+            
+            .form-options {
+                flex-direction: column;
+                gap: 15px;
+                align-items: flex-start;
+            }
+            
+            .profile-stat-card {
+                min-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 导航栏 -->
+    <header>
+        <div class="container">
+            <nav class="navbar">
+                <a href="#" class="logo">
+                    <i class="fas fa-leaf"></i>
+                    <span>舌象慧珍</span>
+                </a>
+                
+                <ul class="nav-links">
+                    <li><a href="#" class="active">首页</a></li>
+                    <li><a href="#upload">舌象诊断</a></li>
+                    <li><a href="#forum">养生论坛</a></li>
+                    <li><a href="#features">功能特色</a></li>
+                    <li><a href="#about">关于我们</a></li>
+                </ul>
+                
+                <div class="user-actions">
+                    <a href="javascript:void(0)" onclick="showLogin()" class="btn-login">登录</a>
+                    <a href="javascript:void(0)" onclick="showLogin()" class="btn-register">注册</a>
+                </div>
+                
+                <button class="mobile-menu-btn" id="mobileMenuBtn">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- 首页英雄区域 -->
+    <section class="hero" id="home">
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-text">
+                    <h1>融合千年中医舌诊智慧与现代AI技术</h1>
+                    <p>拍照上传舌象即可获得专业的体质分析与个性化养生建议。基于多模态AI大模型，结合传统中医认证，为您提供精准的健康评估。</p>
+                    <div class="hero-buttons">
+                        <a href="#upload" class="btn-primary">
+                            <i class="fas fa-cloud-upload-alt"></i>
+                            立即上传舌象
+                        </a>
+                        <a href="#workflow" class="btn-secondary">
+                            <i class="fas fa-info-circle"></i>
+                            了解诊断原理
+                        </a>
+                    </div>
+                </div>
+                <div class="hero-image">
+                    <img src="https://images.unsplash.com/photo-1551601651-2a8555f1a136?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="舌象分析示意图">
+                </div>
+            </div>
+            
+            <div class="stats">
+                <div class="stat-item">
+                    <div class="stat-number">98%</div>
+                    <div class="stat-label">分析准确率</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">10万+</div>
+                    <div class="stat-label">舌象数据训练</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">3秒</div>
+                    <div class="stat-label">快速出结果</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 工作原理 -->
+    <section class="section-padding" id="workflow">
+        <div class="container">
+            <div class="section-title">
+                <h2>工作原理</h2>
+                <p>基于深度学习技术，将千年中医舌诊经验数字化，让健康管理更简单</p>
+            </div>
+            
+            <div class="workflow">
+                <div class="workflow-step">
+                    <div class="step-number">01</div>
+                    <h3>上传舌象</h3>
+                    <p>使用手机拍摄或上传已有的舌象照片，系统会自动进行图像预处理和质量检测。</p>
+                </div>
+                <div class="workflow-step">
+                    <div class="step-number">02</div>
+                    <h3>AI智能分析</h3>
+                    <p>基于十万级舌象数据训练的多模态大模型，从舌色、舌形、舌苔、舌态多维度进行深度分析。</p>
+                </div>
+                <div class="workflow-step">
+                    <div class="step-number">03</div>
+                    <h3>体质辨识</h3>
+                    <p>结合中医九种体质理论，精准判断您的体质类型，包括平和质、气虚质、阳虚质等。</p>
+                </div>
+                <div class="workflow-step">
+                    <div class="step-number">04</div>
+                    <h3>养生建议</h3>
+                    <p>根据分析结果，提供个性化的饮食调理、穴位按摩、起居养生等专业建议。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 上传舌象区域 -->
+    <section class="section-padding upload-section" id="upload">
+        <div class="container">
+            <div class="upload-container">
+                <h2 class="upload-title">开始您的舌象问诊</h2>
+                <p class="upload-subtitle">上传舌象照片，填写身体状况，AI将为您提供专业分析</p>
+                
+                <div class="upload-area" id="uploadArea">
+                    <i class="fas fa-cloud-upload-alt"></i>
+                    <h3>上传舌象照片</h3>
+                    <p>点击上传或拖拽图片至此</p>
+                    <p>支持 JPG、PNG 格式，最大 10MB</p>
+                    <p style="margin-top: 15px;"><a href="javascript:void(0)" style="color: var(--primary); font-weight: 500;">没有照片？使用示例图片体验</a></p>
+                </div>
+                
+                <div class="upload-tips">
+                    <h4>拍摄技巧</h4>
+                    <ul>
+                        <li><i class="fas fa-check-circle"></i> 在自然光或明亮灯光下拍摄</li>
+                        <li><i class="fas fa-check-circle"></i> 张嘴伸出舌头，舌面放平</li>
+                        <li><i class="fas fa-check-circle"></i> 确保舌头整体在画面中央</li>
+                        <li><i class="fas fa-check-circle"></i> 避免刚进食后立即拍摄</li>
+                        <li><i class="fas fa-check-circle"></i> 不要使用滤镜或美颜效果</li>
+                    </ul>
+                </div>
+                
+                <button class="btn-next">
+                    <span>下一步：填写症状</span>
+                    <i class="fas fa-arrow-right"></i>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- 功能特色 -->
+    <section class="section-padding" id="features">
+        <div class="container">
+            <div class="section-title">
+                <h2>核心能力</h2>
+                <p>基于多模态大模型，融合传统中医智慧与现代AI技术</p>
+            </div>
+            
+            <div class="features">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-brain"></i>
+                    </div>
+                    <h3>多模态AI分析</h3>
+                    <p>融合图像识别、自然语言处理、知识图谱等多种AI技术，实现精准舌象分析。</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-user-md"></i>
+                    </div>
+                    <h3>个性化养生方案</h3>
+                    <p>根据体质分析结果，提供饮食调理、穴位按摩、起居养生等定制化建议。</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-comments"></i>
+                    </div>
+                    <h3>智能问诊对话</h3>
+                    <p>支持多轮对话交互，根据用户反馈持续优化诊断结果和建议方案。</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3>隐私安全保障</h3>
+                    <p>采用端到端加密，所有数据本地化处理，确保您的健康信息安全。</p>
+                </div>
+            </div>
+            
+            <a href="#upload" class="btn-experience">立即体验智能舌诊</a>
+        </div>
+    </section>
+
+    <!-- 关于我们 -->
+    <section class="section-padding about-section" id="about">
+        <div class="container">
+            <div class="about-content">
+                <div class="about-text">
+                    <h2>传承中医智慧 赋能健康未来</h2>
+                    <p>舌象慧珍是一款基于多模态大模型的中医智能问诊平台，致力于将千年中医舌诊智慧与现代人工智能技术深度融合。</p>
+                    <p>我们的技术团队由 AI 科学家、中医专家、软件工程师共同组成，历时三年研发，基于十万级标注舌象数据训练模型，实现了舌色、舌形、舌苔、舌态的精准识别与体质辨识。</p>
+                    <p>我们的愿景是让每个人都能便捷地获得专业的中医健康指导，让传统中医智慧惠及更多人。</p>
+                    
+                    <div class="quote">
+                        <p>望闻问切，舌诊为先。舌为心之苗，脾之外候，五脏六腑皆可于舌上察之。</p>
+                    </div>
+                    
+                    <div class="about-stats">
+                         <div class="about-stat">
+                            <div class="about-stat-label">技术研发</div>
+                        </div>
+                        <div class="about-stat">
+                            <div class="about-stat-label">AI中医专家</div>
+                        </div>
+                        <div class="about-stat">
+                            <div class="about-stat-label">用户信赖</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="about-image">
+                    <img src="https://images.unsplash.com/photo-1559757175-0eb30cd8c063?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="中医舌诊">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 页脚 -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <a href="#" class="logo">
+                        <i class="fas fa-leaf"></i>
+                        <span>舌象慧珍</span>
+                    </a>
+                    <p>融合千年中医智慧与现代AI技术，让传统舌诊走进千家万户。通过智能舌象分析，为您提供专业的健康评估与养生建议。</p>
+                </div>
+                
+                <div class="footer-links">
+                    <div class="footer-column">
+                        <h4>产品功能</h4>
+                        <ul>
+                            <li><a href="#">舌象诊断</a></li>
+                            <li><a href="#">AI分析</a></li>
+                            <li><a href="#">健康报告</a></li>
+                            <li><a href="#">养生建议</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-column">
+                        <h4>帮助支持</h4>
+                        <ul>
+                            <li><a href="#">使用指南</a></li>
+                            <li><a href="#">常见问题</a></li>
+                            <li><a href="#">联系我们</a></li>
+                            <li><a href="#">意见反馈</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-column">
+                        <h4>关于我们</h4>
+                        <ul>
+                            <li><a href="#">平台介绍</a></li>
+                            <li><a href="#">技术原理</a></li>
+                            <li><a href="#">隐私政策</a></li>
+                            <li><a href="#">用户协议</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>© 2026 舌象慧珍. 保留所有权利</p>
+                <div class="footer-bottom-links">
+                    <a href="#">隐私政策</a>
+                    <a href="#">用户协议</a>
+                    <a href="#">Cookie设置</a>
+                </div>
+                <div class="disclaimer">
+                    <p>温馨提示：舌象慧珍提供的分析结果仅供参考，不能替代专业医师的诊断和治疗建议。如有身体不适，请及时就医。本平台不提供医疗处方服务。</p>
+                </div>
+                <p style="margin-top: 20px;">Made in Wegic</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- 登录模态框 -->
+    <div class="login-section" id="loginModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.7); z-index: 2000;">
+        <div class="login-container">
+            <h2>欢迎回来</h2>
+            <p>开启您的养生之旅</p>
+            
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="username">手机号/邮箱</label>
+                    <input type="text" id="username" class="form-control" placeholder="请输入手机号或邮箱" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="password">密码</label>
+                    <input type="password" id="password" class="form-control" placeholder="请输入密码" required>
+                </div>
+                
+                <div class="form-options">
+                    <div class="remember-me">
+                        <input type="checkbox" id="remember">
+                        <label for="remember">记住我</label>
+                    </div>
+                    <a href="#" class="forgot-password">忘记密码？</a>
+                </div>
+                
+                <button type="submit" class="btn-login-submit">登录</button>
+                
+                <p>还没有账号？<a href="javascript:void(0)" onclick="switchToRegister()" style="color: var(--primary); font-weight: 500;">立即注册</a></p>
+                
+                <a href="javascript:void(0)" onclick="hideLogin()" class="back-home">
+                    <i class="fas fa-arrow-left"></i>
+                    返回首页
+                </a>
+            </form>
+        </div>
+    </div>
+
+    <!-- 个人中心页面 (隐藏，登录后显示) -->
+    <div class="profile-section" id="profileSection" style="display: none;">
+        <div class="container">
+            <div class="profile-header">
+                <div class="profile-avatar">张</div>
+                <div class="profile-info">
+                    <h2>张三</h2>
+                    <p>zhangsan@example.com</p>
+                </div>
+            </div>
+            
+            <div class="profile-stats">
+                <div class="profile-stat-card">
+                    <div class="profile-stat-number">3</div>
+                    <div class="profile-stat-label">诊断记录</div>
+                </div>
+                <div class="profile-stat-card">
+                    <div class="profile-stat-number">15</div>
+                    <div class="profile-stat-label">收藏建议</div>
+                </div>
+                <div class="profile-stat-card">
+                    <div class="profile-stat-number">平和质</div>
+                    <div class="profile-stat-label">体质类型</div>
+                </div>
+            </div>
+            
+            <div class="profile-tabs">
+                <button class="profile-tab active">诊断记录</button>
+                <button class="profile-tab">收藏建议</button>
+                <button class="profile-tab">账号设置</button>
+            </div>
+            
+            <div class="diagnosis-records">
+                <div class="diagnosis-record">
+                    <div class="diagnosis-date">2024-01-28</div>
+                    <div class="diagnosis-type">平和质</div>
+                    <div class="diagnosis-description">舌质淡红，苔薄白，脉缓</div>
+                    <button class="btn-view-details">查看详情 →</button>
+                </div>
+                <div class="diagnosis-record">
+                    <div class="diagnosis-date">2024-01-15</div>
+                    <div class="diagnosis-type">气虚质</div>
+                    <div class="diagnosis-description">舌质淡，苔白，脉弱</div>
+                    <button class="btn-view-details">查看详情 →</button>
+                </div>
+                <div class="diagnosis-record">
+                    <div class="diagnosis-date">2024-01-03</div>
+                    <div class="diagnosis-type">阴虚质</div>
+                    <div class="diagnosis-description">舌红少苔，脉细数</div>
+                    <button class="btn-view-details">查看详情 →</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 导航栏交互
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', function(e) {
+                if(this.getAttribute('href').startsWith('#')) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href').substring(1);
+                    const targetSection = document.getElementById(targetId);
+                    
+                    if(targetSection) {
+                        window.scrollTo({
+                            top: targetSection.offsetTop - 80,
+                            behavior: 'smooth'
+                        });
+                    }
+                }
+            });
+        });
+        
+        // 移动端菜单切换
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const navLinks = document.querySelector('.nav-links');
+        const userActions = document.querySelector('.user-actions');
+        
+        mobileMenuBtn.addEventListener('click', function() {
+            const isVisible = navLinks.style.display === 'flex' || navLinks.style.display === '';
+            
+            if(isVisible) {
+                navLinks.style.display = 'none';
+                userActions.style.display = 'none';
+            } else {
+                navLinks.style.display = 'flex';
+                userActions.style.display = 'flex';
+                navLinks.style.flexDirection = 'column';
+                navLinks.style.position = 'absolute';
+                navLinks.style.top = '100%';
+                navLinks.style.left = '0';
+                navLinks.style.width = '100%';
+                navLinks.style.backgroundColor = 'white';
+                navLinks.style.padding = '20px';
+                navLinks.style.boxShadow = '0 10px 20px rgba(0,0,0,0.1)';
+                
+                userActions.style.flexDirection = 'column';
+                userActions.style.position = 'absolute';
+                userActions.style.top = 'calc(100% + 180px)';
+                userActions.style.left = '0';
+                userActions.style.width = '100%';
+                userActions.style.padding = '20px';
+                userActions.style.backgroundColor = 'white';
+                userActions.style.boxShadow = '0 10px 20px rgba(0,0,0,0.1)';
+            }
+        });
+        
+        // 上传区域交互
+        const uploadArea = document.getElementById('uploadArea');
+        
+        uploadArea.addEventListener('click', function() {
+            alert('模拟上传功能：请选择舌象图片文件');
+        });
+        
+        uploadArea.addEventListener('dragover', function(e) {
+            e.preventDefault();
+            this.style.backgroundColor = 'rgba(42, 110, 63, 0.1)';
+        });
+        
+        uploadArea.addEventListener('dragleave', function() {
+            this.style.backgroundColor = '';
+        });
+        
+        uploadArea.addEventListener('drop', function(e) {
+            e.preventDefault();
+            this.style.backgroundColor = '';
+            alert('模拟上传功能：已接收拖拽的舌象图片文件');
+        });
+        
+        // 登录/注册模态框
+        const loginModal = document.getElementById('loginModal');
+        const profileSection = document.getElementById('profileSection');
+        let isLoginMode = true;
+        
+        function showLogin() {
+            loginModal.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+        
+        function hideLogin() {
+            loginModal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+        
+        function switchToRegister() {
+            const loginTitle = document.querySelector('#loginModal h2');
+            const loginSubmit = document.querySelector('#loginModal .btn-login-submit');
+            const loginSwitch = document.querySelector('#loginModal p a');
+            
+            if(isLoginMode) {
+                loginTitle.textContent = '创建新账户';
+                loginSubmit.textContent = '注册';
+                loginSwitch.textContent = '已有账号？立即登录';
+                isLoginMode = false;
+            } else {
+                loginTitle.textContent = '欢迎回来';
+                loginSubmit.textContent = '登录';
+                loginSwitch.textContent = '还没有账号？立即注册';
+                isLoginMode = true;
+            }
+        }
+        
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // 模拟登录成功
+            alert(isLoginMode ? '登录成功！' : '注册成功！');
+            hideLogin();
+            
+            // 显示个人中心
+            document.querySelector('header').style.display = 'none';
+            document.getElementById('home').style.display = 'none';
+            document.getElementById('workflow').style.display = 'none';
+            document.getElementById('upload').style.display = 'none';
+            document.getElementById('features').style.display = 'none';
+            document.getElementById('about').style.display = 'none';
+            document.querySelector('footer').style.display = 'none';
+            
+            profileSection.style.display = 'block';
+        });
+        
+        // 返回首页功能
+        function goToHome() {
+            document.querySelector('header').style.display = 'block';
+            document.getElementById('home').style.display = 'block';
+            document.getElementById('workflow').style.display = 'block';
+            document.getElementById('upload').style.display = 'block';
+            document.getElementById('features').style.display = 'block';
+            document.getElementById('about').style.display = 'block';
+            document.querySelector('footer').style.display = 'block';
+            
+            profileSection.style.display = 'none';
+            
+            // 滚动到顶部
+            window.scrollTo({top: 0, behavior: 'smooth'});
+        }
+        
+        // 添加返回首页按钮到个人中心
+        const profileHeader = document.querySelector('.profile-header');
+        const backToHomeBtn = document.createElement('a');
+        backToHomeBtn.innerHTML = '<i class="fas fa-arrow-left"></i> 返回首页';
+        backToHomeBtn.style.cssText = 'display: inline-flex; align-items: center; gap: 8px; color: var(--primary); margin-left: auto; font-weight: 500;';
+        backToHomeBtn.href = 'javascript:void(0)';
+        backToHomeBtn.onclick = goToHome;
+        profileHeader.appendChild(backToHomeBtn);
+        
+        // 个人中心标签切换
+        document.querySelectorAll('.profile-tab').forEach(tab => {
+            tab.addEventListener('click', function() {
+                document.querySelectorAll('.profile-tab').forEach(t => t.classList.remove('active'));
+                this.classList.add('active');
+                
+                // 这里可以添加切换不同内容的功能
+                const tabName = this.textContent.trim();
+                alert(`切换到${tabName}标签`);
+            });
+        });
+        
+        // 滚动时导航栏高亮
+        window.addEventListener('scroll', function() {
+            const sections = document.querySelectorAll('section[id]');
+            const scrollPos = window.scrollY + 100;
+            
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.offsetHeight;
+                const sectionId = section.getAttribute('id');
+                
+                if(scrollPos >= sectionTop && scrollPos < sectionTop + sectionHeight) {
+                    document.querySelectorAll('.nav-links a').forEach(link => {
+                        link.classList.remove('active');
+                        if(link.getAttribute('href') === `#${sectionId}`) {
+                            link.classList.add('active');
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
